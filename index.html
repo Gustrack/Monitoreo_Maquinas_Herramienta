@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador de Monitoreo de Máquinas Herramientas</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Simulador de Monitoreo de Máquinas Herramientas</h1>
+        
+        <div class="description">
+            <h2>Descripción del Simulador</h2>
+            <p>Este simulador monitorea 4 máquinas herramientas que operan con corriente trifásica. Para cada máquina, se simula la lectura de 3 corrientes trifásicas (I1, I2, I3), la tensión alterna (V) y se calcula la potencia activa (P).</p>
+            <p>El sistema permite realizar un muestreo general de todas las máquinas o consultar los datos de una máquina específica. Incluye sistema de alarma cuando las corrientes superan los valores nominales.</p>
+        </div>
+        
+        <div id="alarm-container" class="alarm">
+            <h3>⚠️ ALARMA - SOBRECORRIENTE</h3>
+            <div id="alarm-message"></div>
+        </div>
+        
+        <div id="shutdown-container" class="shutdown">
+            <h3>🛑 SIMULADOR APAGADO</h3>
+            <div id="shutdown-message"></div>
+        </div>
+        
+        <!-- Formulario para configuración de valores nominales -->
+        <div id="config-form-container" class="form-container" style="display: none;">
+            <h3>Configuración de Valores Nominales</h3>
+            <form id="config-form">
+                <div class="form-group">
+                    <label for="corriente-nominal">Corriente Nominal (A):</label>
+                    <input type="number" id="corriente-nominal" min="1" max="200" step="0.1" required>
+                </div>
+                <div class="form-group">
+                    <label for="tension-nominal">Tensión Nominal (V):</label>
+                    <input type="number" id="tension-nominal" min="100" max="1000" step="1" required>
+                </div>
+                <div class="button-group">
+                    <button type="submit" class="btn-success">Guardar Configuración</button>
+                    <button type="button" class="btn-secondary" onclick="ocultarFormularioConfig()">Cancelar</button>
+                </div>
+            </form>
+        </div>
+        
+        <!-- Formulario para consultar máquina específica -->
+        <div id="consulta-form-container" class="form-container" style="display: none;">
+            <h3>Consultar Máquina Específica</h3>
+            <form id="consulta-form">
+                <div class="form-group">
+                    <label for="numero-maquina">Número de Máquina (1-4):</label>
+                    <input type="number" id="numero-maquina" min="1" max="4" required>
+                </div>
+                <div class="button-group">
+                    <button type="submit" class="btn-success">Consultar</button>
+                    <button type="button" class="btn-secondary" onclick="ocultarFormularioConsulta()">Cancelar</button>
+                </div>
+            </form>
+        </div>
+        
+        <div class="button-container">
+            <button onclick="iniciarSimulador()" class="btn-success">Iniciar Simulador</button>
+            <button onclick="mostrarTodasLasMaquinas()">Mostrar Todas las Máquinas</button>
+            <button onclick="mostrarFormularioConsulta()">Consultar Máquina Específica</button>
+            <button onclick="mostrarFormularioConfig()">Configurar Valores Nominales</button>
+            <button onclick="finalizarSimulador()" class="btn-danger">Finalizar Simulador</button>
+        </div>
+        
+        <!-- Panel para mostrar resultados -->
+        <div id="resultados" class="machine-data">
+            <h3>Resultados del Monitoreo</h3>
+            <div class="result-header">
+                <div class="info-box">
+                    <p><strong>Estado:</strong> <span id="estado-texto">No iniciado</span></p>
+                    <p><strong>Última actualización:</strong> <span id="ultima-actualizacion">-</span></p>
+                    <p><strong>Valor nominal corriente:</strong> <span id="valor-nominal-actual">40</span> A</p>
+                </div>
+            </div>
+            <div class="table-container">
+                <table id="tabla-resultados">
+                    <thead>
+                        <tr>
+                            <th>Máquina</th>
+                            <th>Corriente I1 (A)</th>
+                            <th>Corriente I2 (A)</th>
+                            <th>Corriente I3 (A)</th>
+                            <th>Tensión (V)</th>
+                            <th>Potencia (kW)</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cuerpo-tabla">
+                        <!-- Los datos se llenan dinámicamente -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- Historial de operaciones -->
+        <div id="historial-container" class="machine-data">
+            <h3>Historial de Operaciones</h3>
+            <div class="button-group">
+                <button onclick="limpiarHistorial()" class="btn-secondary">Limpiar Historial</button>
+                <button onclick="exportarDatos()" class="btn-info">Exportar Datos</button> 
+            </div>
+            <div id="historial-lista" style="margin-top: 25px;"></div>
+        </div>
+    </div>
+
+    <script src="js/simulador.js"></script>
+</body>
+</html>
