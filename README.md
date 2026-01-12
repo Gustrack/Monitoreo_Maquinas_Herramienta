@@ -13,13 +13,13 @@ Simulador web que monitorea 4 máquinas herramientas, leyendo corrientes trifás
 - Exportación de datos en JSON
 
 ## Estructura del proyecto
-proyecto/
-├── index.html # Archivo principal HTML
+ENTREGABLE2_GUSTAVO_ATALA/
+├── index.html      # Archivo principal HTML
 ├── css/
-│ └── styles.css # Estilos CSS separados
+│ └── styles.css    # Estilos CSS separados
 ├── js/
-│ └── simulador.js # Lógica JavaScript
-└── README.md # Documentación
+│ └── simulador.js  # Lógica JavaScript
+└── README.md       # Documentación
 
 ## Cómo usar
 1. Abrir `index.html` en un navegador web moderno
@@ -46,11 +46,3 @@ proyecto/
 - LocalStorage API
 - DOM Manipulation
 
-## Criterios implementados (Entrega 2)
-- ✓ Integración completa JS con HTML/CSS mediante DOM
-- ✓ Eliminación de prompt() y alert()
-- ✓ Uso de LocalStorage para persistencia
-- ✓ Eventos capturados desde HTML
-- ✓ Formularios para entrada de datos
-- ✓ Estructura en subcarpetas
-- ✓ Código limpio y documentado
