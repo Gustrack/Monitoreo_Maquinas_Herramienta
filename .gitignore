@@ -1,0 +1,20 @@
+# Dependencias
+node_modules/
+package-lock.json
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
+
+# Archivos de VSCode
+.vscode/
+*.code-workspace
+
+# Archivos temporales
+*.log
+*.tmp
+*.temp
+
+# Archivos de entorno
+.env
+.env.local
