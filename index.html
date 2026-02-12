@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚡ Sistema Monitoreo Maquinas Herramienta </title>
+    
+    <!-- Font Awesome 6 para iconos tecnológicos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- SweetAlert2 para notificaciones profesionales -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <!-- Chart.js para gráficos interactivos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.css">
+    <!-- Animate.css para animaciones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <!-- Estilos personalizados -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Fondo tecnológico animado -->
+    <div class="tech-background">
+        <div class="grid-overlay"></div>
+        <div class="particles"></div>
+    </div>
+
+    <div class="container animate__animated animate__fadeIn">
+        <!-- Header con diseño tecnológico -->
+        <header class="tech-header">
+            <div class="logo-container">
+                <i class="fas fa-microchip fa-3x"></i>
+                <div class="logo-text">
+                    <h1>Sistema Monitoreo Maquinas Herramienta</h1>
+                    <span class="badge">v2.2 SmartMonitor Pro</span>
+                </div>
+            </div>
+            <div class="system-status">
+                <div class="status-indicator" id="sistema-estado">
+                    <i class="fas fa-circle"></i>
+                    <span id="estado-texto-header">Sistema Inactivo</span>
+                </div>
+                <div class="datetime">
+                    <i class="far fa-calendar-alt"></i>
+                    <span id="fecha-actual"></span>
+                    <i class="far fa-clock"></i>
+                    <span id="hora-actual"></span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Dashboard principal -->
+        <div class="dashboard-grid">
+            <!-- Panel de control -->
+            <div class="control-panel glass-effect animate__animated animate__fadeInLeft">
+                <div class="panel-header">
+                    <i class="fas fa-sliders-h"></i>
+                    <h2>Panel de Control</h2>
+                </div>
+                
+                <!-- Métricas en tiempo real -->
+                <div class="metrics-container">
+                    <div class="metric-card">
+                        <i class="fas fa-bolt"></i>
+                        <div class="metric-info">
+                            <span class="metric-label">Corriente Nominal</span>
+                            <span class="metric-value" id="valor-nominal-header">40</span>
+                            <span class="metric-unit">A</span>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <i class="fas fa-chart-line"></i>
+                        <div class="metric-info">
+                            <span class="metric-label">Máquinas Activas</span>
+                            <span class="metric-value" id="maquinas-activas">0</span>
+                            <span class="metric-unit">/4</span>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <div class="metric-info">
+                            <span class="metric-label">Alarmas Activas</span>
+                            <span class="metric-value" id="alarmas-activas">0</span>
+                            <span class="metric-unit">alertas</span>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <i class="fas fa-sync-alt"></i>
+                        <div class="metric-info">
+                            <span class="metric-label">Intervalo Muestreo</span>
+                            <span class="metric-value" id="intervalo-actual">30</span>
+                            <span class="metric-unit">s</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Botones de acción con diseño tecnológico -->
+                <div class="action-buttons">
+                    <button onclick="window.simulador.iniciar()" class="btn btn-success glass-effect">
+                        <i class="fas fa-play"></i> Iniciar Sistema
+                    </button>
+                    <button onclick="window.simulador.mostrarTodasLasMaquinas()" class="btn btn-primary glass-effect">
+                        <i class="fas fa-industry"></i> Todas las Máquinas
+                    </button>
+                    <button onclick="window.simulador.mostrarFormularioConsulta()" class="btn btn-info glass-effect">
+                        <i class="fas fa-search"></i> Consultar Máquina Exclusiva
+                    </button>
+                    <button onclick="window.simulador.mostrarFormularioConfig()" class="btn btn-warning glass-effect">
+                        <i class="fas fa-cog"></i> Configurar
+                    </button>
+                    <button onclick="window.simulador.finalizar()" class="btn btn-danger glass-effect">
+                        <i class="fas fa-power-off"></i> Finalizar
+                    </button>
+                </div>
+
+                <!-- Formularios modales -->
+                <div id="config-form-container" class="modal-form" style="display: none;">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <i class="fas fa-tools"></i>
+                            <h3>Configuración de Parámetros</h3>
+                            <button class="close-btn" onclick="window.simulador.ocultarFormularioConfig()">&times;</button>
+                        </div>
+                        <form id="config-form">
+                            <div class="form-group">
+                                <label><i class="fas fa-bolt"></i> Corriente Nominal (A):</label>
+                                <input type="number" id="corriente-nominal" min="1" max="200" step="0.1" 
+                                       value="40" class="tech-input" required>
+                                <span class="input-hint">Rango: 1-200 A</span>
+                            </div>
+                            <div class="form-group">
+                                <label><i class="fas fa-flask"></i> Tensión Nominal (V):</label>
+                                <input type="number" id="tension-nominal" min="100" max="1000" step="1" 
+                                       value="380" class="tech-input" required>
+                                <span class="input-hint">Rango: 100-1000 V</span>
+                            </div>
+                            <div class="form-group">
+                                <label><i class="fas fa-sync-alt"></i> Intervalo de Muestreo (segundos):</label>
+                                <input type="number" id="intervalo-muestreo" min="5" max="120" step="5" 
+                                       value="30" class="tech-input" required>
+                                <span class="input-hint">Rango: 5-120 segundos (recomendado: 30s)</span>
+                            </div>
+                            <div class="button-group">
+                                <button type="submit" class="btn btn-success">
+                                    <i class="fas fa-save"></i> Guardar
+                                </button>
+                                <button type="button" class="btn btn-secondary" onclick="window.simulador.ocultarFormularioConfig()">
+                                    <i class="fas fa-times"></i> Cancelar
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div id="consulta-form-container" class="modal-form" style="display: none;">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <i class="fas fa-search-location"></i>
+                            <h3>Consultar Máquina Exclusiva</h3>
+                            <button class="close-btn" onclick="window.simulador.ocultarFormularioConsulta()">&times;</button>
+                        </div>
+                        <form id="consulta-form">
+                            <div class="form-group">
+                                <label><i class="fas fa-cogs"></i> Número de Máquina (1-4):</label>
+                                <input type="number" id="numero-maquina" min="1" max="4" 
+                                       value="1" class="tech-input" required>
+                                <span class="input-hint">Seleccione 1-4</span>
+                            </div>
+                            <div class="button-group">
+                                <button type="submit" class="btn btn-success">
+                                    <i class="fas fa-check"></i> Consultar
+                                </button>
+                                <button type="button" class="btn btn-secondary" onclick="window.simulador.ocultarFormularioConsulta()">
+                                    <i class="fas fa-times"></i> Cancelar
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Área de visualización de datos -->
+            <div class="visualization-area animate__animated animate__fadeInRight">
+                <!-- Contenedor de alarmas -->
+                <div id="alarm-container" class="alarm-panel" style="display: none;">
+                    <div class="alarm-header">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <h3>SISTEMA DE ALERTAS - SOBRECARGA DETECTADA</h3>
+                    </div>
+                    <div id="alarm-message" class="alarm-message"></div>
+                </div>
+
+                <!-- Contenedor de apagado -->
+                <div id="shutdown-container" class="shutdown-panel" style="display: none;">
+                    <div class="shutdown-header">
+                        <i class="fas fa-power-off"></i>
+                        <h3>SISTEMA APAGADO</h3>
+                    </div>
+                    <div id="shutdown-message" class="shutdown-message"></div>
+                </div>
+
+                <!-- Panel de resultados con gráficos -->
+                <div id="resultados" class="results-panel">
+                    <div class="panel-header">
+                        <i class="fas fa-chart-bar"></i>
+                        <h3>Monitoreo en Tiempo Real</h3>
+                        <div class="header-actions">
+                            <span class="last-update">
+                                <i class="far fa-clock"></i>
+                                <span id="ultima-actualizacion">-</span>
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <!-- Gráfico de tendencias -->
+                    <div class="chart-container">
+                        <canvas id="tendencias-chart"></canvas>
+                    </div>
+
+                    <!-- Tabla de datos tecnológica -->
+                    <div class="table-wrapper">
+                        <table id="tabla-resultados" class="tech-table">
+                            <thead>
+                                <tr>
+                                    <th><i class="fas fa-cog"></i> Máquina</th>
+                                    <th><i class="fas fa-bolt"></i> I1 (A)</th>
+                                    <th><i class="fas fa-bolt"></i> I2 (A)</th>
+                                    <th><i class="fas fa-bolt"></i> I3 (A)</th>
+                                    <th><i class="fas fa-flask"></i> V (V)</th>
+                                    <th><i class="fas fa-chart-pie"></i> P (kW)</th>
+                                    <th><i class="fas fa-flag"></i> Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody id="cuerpo-tabla">
+                                <!-- Datos dinámicos -->
+                                <tr>
+                                    <td colspan="7" style="text-align: center; color: #6c757d;">
+                                        <i class="fas fa-info-circle"></i> Inicie el sistema para ver datos
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Historial de operaciones -->
+                <div class="history-panel">
+                    <div class="panel-header">
+                        <i class="fas fa-history"></i>
+                        <h3>Historial de Operaciones</h3>
+                        <div class="header-actions">
+                            <button onclick="window.simulador.limpiarHistorial()" class="btn-icon" title="Limpiar historial">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                            <button onclick="window.simulador.exportarDatos()" class="btn-icon" title="Exportar datos">
+                                <i class="fas fa-download"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div id="historial-lista" class="history-list"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts - Orden CORRECTO: primero librerías, luego nuestro código -->
+    <script src="https://cdn.jsdelivr.net/npm/luxon@3.0.1/build/global/luxon.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Nuestro código JS debe ir AL FINAL -->
+    <script src="js/simulador.js"></script>
+</body>
+</html>
