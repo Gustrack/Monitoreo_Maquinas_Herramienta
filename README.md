@@ -17,13 +17,13 @@ Chart.js, SweetAlert2, Luxon
 - Exportación de datos en JSON
 
 ## Estructura del Proyecto 
-MONITOREO_MAQUINAS_HERRAMIENTA_GUSTAVO_ATALA/
-├── index.html
-├── css/
-│   └── styles.css
-├── js/
-│   └── simulador.js
-└── README.md
+MONITOREO_MAQUINAS_HERRAMIENTA_GUSTAVO_ATALA/  
+├── index.html  
+├── css/  
+ │   └── styles.css  
+├── js/  
+ │   └── simulador.js  
+└── README.md  
 
 ## Instalación
 1. Clonar repositorio
